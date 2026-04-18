@@ -96,8 +96,8 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen p-4 flex flex-col items-center justify-center select-none font-sans">
-      <div className="w-full max-w-4xl bg-white/70 backdrop-blur-md shadow-xl rounded-3xl p-8 border border-white/40 flex flex-col h-[85vh]">
+    <div className="min-h-screen p-4 flex flex-col items-center justify-center font-sans">
+      <div className="w-full max-w-4xl bg-white/70 backdrop-blur-md shadow-xl rounded-3xl p-8 border border-white/40 flex flex-col min-h-[1100px] sm:min-h-[806px] h-auto">
 
         {/* Header */}
         <div className="mb-8 text-center flex flex-col items-center">
@@ -212,7 +212,7 @@ function App() {
 
           <div
             ref={resultsContainerRef}
-            className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar p-6 space-y-3 relative"
+            className="flex-1 max-h-[489px] sm:max-h-[303px] overflow-y-auto overflow-x-hidden custom-scrollbar p-6 space-y-3 relative"
           >
             {results.length === 0 && !isSearching && errors.length === 0 && (
               <div className="h-full flex flex-col items-center justify-center text-gray-400 opacity-60">
@@ -227,17 +227,17 @@ function App() {
                 key={index}
                 className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-white border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] hover:shadow-md transition-shadow group animate-in fade-in slide-in-from-bottom-2 duration-300 ease-out"
               >
-                <div className="flex items-center text-gray-800 font-semibold text-sm truncate pr-4 max-w-full sm:max-w-[45%]">
+                <div className="flex items-center text-gray-800 font-semibold text-sm min-w-0 pr-4 max-w-full sm:max-w-[45%]">
                   <div className="w-8 h-8 rounded-full bg-brand-pastel-rose text-rose-500 flex items-center justify-center mr-3 shrink-0">
                     <Mail className="w-4 h-4" />
                   </div>
-                  <a href={`mailto:${res.email}`} className="truncate hover:text-indigo-600 hover:underline transition-colors">
+                  <a href={`mailto:${res.email}`} className="truncate hover:text-indigo-600 hover:underline transition-colors block">
                     {res.email}
                   </a>
                 </div>
-                <div className="mt-2 sm:mt-0 flex items-center text-xs text-blue-500 hover:text-blue-600 truncate bg-brand-pastel-blue px-3 py-1.5 rounded-lg w-fit ml-11 sm:ml-0 group-hover:bg-blue-100 transition-colors cursor-pointer" title={res.sourceUrl}>
+                <div className="mt-2 sm:mt-0 flex items-center text-xs text-blue-500 hover:text-blue-600 bg-brand-pastel-blue px-3 py-1.5 rounded-lg group-hover:bg-blue-100 transition-colors cursor-pointer min-w-0 max-w-full overflow-hidden" title={res.sourceUrl}>
                   <LinkIcon className="w-3 h-3 mr-1.5 shrink-0" />
-                  <a href={res.sourceUrl} target="_blank" rel="noopener noreferrer" className="truncate hover:underline">
+                  <a href={res.sourceUrl} target="_blank" rel="noopener noreferrer" className="truncate hover:underline block">
                     {res.sourceUrl}
                   </a>
                 </div>
