@@ -217,7 +217,7 @@ function App() {
             {results.length === 0 && !isSearching && errors.length === 0 && (
               <div className="h-full flex flex-col items-center justify-center text-gray-400 opacity-60">
                 <Mail className="w-16 h-16 mb-4 text-gray-300" strokeWidth={1} />
-                <p className="text-sm font-medium text-center">Ready to extract missing links.</p>
+                <p className="text-sm font-medium text-center">Ready to extract email addresses.</p>
                 <p className="text-xs mt-1">Enter a URL to begin scraping</p>
               </div>
             )}
