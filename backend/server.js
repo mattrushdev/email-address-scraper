@@ -19,6 +19,13 @@ app.get('/api/scrape', async (req, res) => {
     url = 'https://' + url;
   }
 
+  let validatedUrl;
+  try {
+    validatedUrl = new URL(url);
+  } catch (e) {
+    return res.status(400).json({ error: 'Invalid URL provided' });
+  }
+
   let depth = parseInt(maxDepth, 10);
   if (isNaN(depth) || depth < 1 || depth > 5) {
     return res.status(400).json({ error: 'maxDepth must be a number between 1 and 5' });

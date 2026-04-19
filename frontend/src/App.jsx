@@ -33,9 +33,22 @@ function App() {
     setCopied(false);
     setIsSearching(true);
 
+    // Client-side URL validation
+    let sanitizedUrl = url.trim();
+    if (!sanitizedUrl.startsWith('http://') && !sanitizedUrl.startsWith('https://')) {
+      sanitizedUrl = 'https://' + sanitizedUrl;
+    }
+
+    try {
+      new URL(sanitizedUrl);
+    } catch (e) {
+      setErrors(['Please enter a valid URL (e.g., https://example.com)']);
+      setIsSearching(false);
+      return;
+    }
+
     // Create new SSE connection
-    // We proxy /api to the backend in Vite, but construct the full query here
-    const encodedUrl = encodeURIComponent(url);
+    const encodedUrl = encodeURIComponent(sanitizedUrl);
     eventSourceRef.current = new EventSource(`/api/scrape?url=${encodedUrl}&maxDepth=${depth}`);
 
     eventSourceRef.current.addEventListener('email', (e) => {
@@ -56,8 +69,7 @@ function App() {
         // We received an error event but no data, might be connection refused/dropped
         if (eventSourceRef.current.readyState === EventSource.CLOSED) {
           setErrors(prev => [...prev, 'Connection to the server was closed unexpectedly.']);
-        } else {
-          // just ignore some intermediate connection drops if it reconnects
+          handleCancel(); // Stop the UI loading state
         }
       }
 
