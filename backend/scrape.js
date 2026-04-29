@@ -41,6 +41,13 @@ async function scrape(inputUrl, maxDepth, res, state) {
         }
       });
 
+      // Check content type to ensure it's HTML
+      const contentType = response.headers['content-type'] || '';
+      if (!contentType.includes('text/html')) {
+        console.log(`Skipping non-HTML content: ${currentUrl} (${contentType})`);
+        continue;
+      }
+
       // Use the final response URL in case of redirects
       const finalUrl = response.request?.res?.responseUrl || currentUrl;
       if (!visitedUrls.has(finalUrl)) {

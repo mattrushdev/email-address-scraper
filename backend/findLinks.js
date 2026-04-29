@@ -10,6 +10,12 @@ function findLinks($, finalUrl, inputDomain, inputPath) {
 
       // Validate: Must be same domain and under the same path constraint
       if (resolvedUrl.hostname === inputDomain && resolvedUrl.pathname.startsWith(inputPath)) {
+        // Filter out non-HTML file extensions to avoid binary files/images
+        const nonHtmlExtensions = /\.(pdf|jpg|jpeg|png|gif|svg|zip|tar|gz|exe|dmg|mp4|mp3|wav|doc|docx|xls|xlsx|ppt|pptx|xml|json)$/i;
+        if (nonHtmlExtensions.test(resolvedUrl.pathname)) {
+          return;
+        }
+
         // Standardize by removing fragments
         resolvedUrl.hash = '';
         pageLinks.push(resolvedUrl.href);

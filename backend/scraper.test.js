@@ -36,6 +36,7 @@ describe('Scraper Module Refactored', () => {
             <a href="/about">About</a>
             <a href="https://example.com/contact">Contact</a>
             <a href="https://other.com">External</a>
+            <a href="/document.pdf">PDF Document</a>
             <a href="#fragment">Fragment</a>
           </body>
         </html>
@@ -45,6 +46,7 @@ describe('Scraper Module Refactored', () => {
       expect(links).toContain('https://example.com/about');
       expect(links).toContain('https://example.com/contact');
       expect(links).not.toContain('https://other.com');
+      expect(links).not.toContain('https://example.com/document.pdf');
       expect(links).not.toContain('https://example.com/#fragment');
     });
   });
@@ -71,6 +73,7 @@ describe('Scraper Module Refactored', () => {
 
     it('scrapes emails and follows links', async () => {
       axios.get.mockResolvedValue({
+        headers: { 'content-type': 'text/html' },
         request: { res: { responseUrl: 'https://example.com' } },
         data: `<html><body><a href="mailto:test@example.com">Contact</a></body></html>`
       });
@@ -88,6 +91,18 @@ describe('Scraper Module Refactored', () => {
 
       expect(mockRes.write).toHaveBeenCalledWith(expect.stringContaining('event: error'));
       expect(mockRes.write).toHaveBeenCalledWith(expect.stringContaining('Network Error'));
+    });
+
+    it('skips non-HTML content', async () => {
+      axios.get.mockResolvedValue({
+        headers: { 'content-type': 'application/pdf' },
+        request: { res: { responseUrl: 'https://example.com/doc.pdf' } },
+        data: '%PDF-1.4 ...'
+      });
+
+      await scrape('https://example.com/doc.pdf', 1, mockRes, mockState);
+
+      expect(mockRes.write).not.toHaveBeenCalledWith(expect.stringContaining('event: email'));
     });
   });
 });
