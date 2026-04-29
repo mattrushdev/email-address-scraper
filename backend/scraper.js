@@ -53,10 +53,25 @@ async function scrape(inputUrl, maxDepth, res, state) {
       const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
 
       // Match on raw HTML text (stripping scripts/styles first for cleaner matches)
-      $('script, style, noscript, iframe').remove();
-      const pageText = $('body').text() || '';
+      //$('script, style, noscript, iframe').remove();
+      //const pageText = $('body').text() || '';
 
-      const pageEmails = new Set(pageText.match(emailRegex) || []);
+      //  const pageEmails = new Set(pageText.match(emailRegex) || []);
+
+      const pageEmails = new Set();
+
+      // Match on each text node
+      $('body').find('*:not(script, style, noscript, iframe)').contents().each((i, el) => {
+        // nodeType 3 is a raw text node
+        if (el.nodeType === 3) {
+          const text = $(el).text();
+          const matches = text.match(emailRegex);
+          if (matches) {
+            matches.forEach(email => pageEmails.add(email.trim()));
+          }
+        }
+      });
+
 
       // Also look for mailto links directly in case the text doesn't show them cleanly
       $('a[href^="mailto:"]').each((_, el) => {

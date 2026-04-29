@@ -237,17 +237,17 @@ function App() {
             {results.map((res, index) => (
               <div
                 key={index}
-                className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-white border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] hover:shadow-md transition-shadow group animate-in fade-in slide-in-from-bottom-2 duration-300 ease-out"
+                className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-white border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] hover:shadow-md transition-shadow group animate-in fade-in slide-in-from-bottom-2 duration-300 ease-out justify-between"
               >
-                <div className="flex items-center text-gray-800 font-semibold text-sm min-w-0 pr-4 max-w-full sm:max-w-[45%]">
+                <div className="flex items-center text-gray-800 font-semibold text-sm min-w-0 pr-4 lg:max-w-[50%] md:max-w-[50%] sm:max-w-[45%] ">
                   <div className="w-8 h-8 rounded-full bg-brand-pastel-rose text-rose-500 flex items-center justify-center mr-3 shrink-0">
                     <Mail className="w-4 h-4" />
                   </div>
-                  <a href={`mailto:${res.email}`} className="truncate hover:text-indigo-600 hover:underline transition-colors block">
+                  <a href={`mailto:${res.email}`} className="truncate hover:text-indigo-600 hover:underline transition-colors block ">
                     {res.email}
                   </a>
                 </div>
-                <div className="mt-2 sm:mt-0 flex items-center text-xs text-blue-500 hover:text-blue-600 bg-brand-pastel-blue px-3 py-1.5 rounded-lg group-hover:bg-blue-100 transition-colors cursor-pointer min-w-0 max-w-full overflow-hidden" title={res.sourceUrl}>
+                <div className="mt-2 sm:mt-0 flex items-center text-xs text-blue-500 hover:text-blue-600 bg-brand-pastel-blue px-3 py-1.5 rounded-lg group-hover:bg-blue-100 transition-colors cursor-pointer min-w-0 lg:max-w-[50%] md:max-w-[50%] sm:max-w-[45%] overflow-hidden" title={res.sourceUrl}>
                   <LinkIcon className="w-3 h-3 mr-1.5 shrink-0" />
                   <a href={res.sourceUrl} target="_blank" rel="noopener noreferrer" className="truncate hover:underline block">
                     {res.sourceUrl}
